@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include saling1 *.css
+recursive-include saling1 *.csv
+recursive-include saling1 *.html
+recursive-include saling1 *.ico
+recursive-include saling1 *.js
+recursive-include saling1 *.json
+recursive-include saling1 *.md
+recursive-include saling1 *.png
+recursive-include saling1 *.py
+recursive-include saling1 *.svg
+recursive-include saling1 *.txt
+recursive-exclude saling1 *.pyc

@@ -77,5 +77,6 @@ def get_size_value(size,brand,cloth_type,category,color):
 	return options1		
 @frappe.whitelist()
 def get_item_info(bar):
-	que=frappe.db.sql("""select brand,brand_name,cloth_type,clothtype_name,category,category_name,color,color_name,size,size_value,saling_price from `tabPdetails` where barcode=%s""",(bar),as_dict=1)
+	bar1=bar[:13]
+	que=frappe.db.sql("""select brand,brand_name,cloth_type,clothtype_name,category,category_name,color,color_name,size,size_value,saling_price from `tabPdetails` where barcode=%s""",(bar1),as_dict=1)
 	return que	

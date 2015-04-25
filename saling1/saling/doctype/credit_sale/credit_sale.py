@@ -22,7 +22,22 @@ class CreditSale(Document):
 		que=frappe.db.sql("""update `tabClient Details` set remaining_amount=%s where client_mobile=%s and client_name=%s""",(self.remaining_amount,self.contact_no,self.client_name))
 		for d in self.get('item_details'):
 			query1=frappe.db.sql("""update `tabStock` set quantity=quantity-%s  where brand=%s and cloth_type=%s and category=%s and color=%s and size=%s""",(d.quantity,d.brand,d.cloth_type,d.category,d.color,d.size));
-
+		if self.payment_mode=='Cash':
+			que=frappe.db.sql("""select max(cast(name as int)) from `tabCash`""")[0][0]
+			if que:
+				n=int(que)+1
+				que1=frappe.db.sql("""insert into `tabCash` set name=%s,client_name=%s,contact_no=%s,amount=%s,date=%s,transaction='1',description='Sales Amount'""",(n,self.client_name,self.contact_no,self.total_amount,self.date))
+			else:	
+				n=1
+				que1=frappe.db.sql("""insert into `tabCash` set name=%s,client_name=%s,contact_no=%s,amount=%s,date=%s,transaction='1',description='Sales Amount'""",(n,self.client_name,self.contact_no,self.total_amount,self.date))	
+		else:
+			qu=frappe.db.sql("""select max(cast(name as int)) from `tabCheque Info`""")[0][0]
+			if qu:
+				n1=int(qu)+1
+				qu1=frappe.db.sql("""insert into `tabCheque Info` set name=%s,client_name=%s,contact_no=%s,bank=%s,bank_name=%s,cheque_no=%s,amount=%s,date=%s,status='Uncleared',transaction='1',description='Sales Amount'""",(n1,self.client_name,self.contact_no,self.bank,self.bank_name,self.cheque_no,self.total_amount,self.date))
+			else:
+				n1=1
+				qu1=frappe.db.sql("""insert into `tabCheque Info` set name=%s,client_name=%s,contact_no=%s,bank=%s,bank_name=%s,cheque_no=%s,amount=%s,date=%s,status='Uncleared',transaction='1',description='sales Amount'""",(n1,self.client_name,self.contact_no,self.bank,self.bank_name,self.cheque_no,self.total_amount,self.date))	
 @frappe.whitelist()
 def get_info(contact):
 	query1=frappe.db.sql("""select client_name,client_email,remaining_amount from `tabClient Details` where client_mobile=%s""",(contact))

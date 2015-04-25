@@ -25,7 +25,7 @@ class Sales(Document):
 			que=frappe.db.sql("""select max(cast(name as int)) from `tabCash`""")[0][0]
 			if que:
 				n=int(que)+1
-				que1=frappe.db.sql("""insert into `tabCash` set name=%s,client_name=%s,contact_no=%s,amount=%s,date=%s,transaction='1',description='Sales Amount'""",(n,self.client_name,self.contact_no,self.tatal_amount,self.date))
+				que1=frappe.db.sql("""insert into `tabCash` set name=%s,client_name=%s,contact_no=%s,amount=%s,date=%s,transaction='1',description='Sales Amount'""",(n,self.client_name,self.contact_no,self.total_amount,self.date))
 			else:	
 				n=1
 				que1=frappe.db.sql("""insert into `tabCash` set name=%s,client_name=%s,contact_no=%s,amount=%s,date=%s,transaction='1',description='Sales Amount'""",(n,self.client_name,self.contact_no,self.total_amount,self.date))	
